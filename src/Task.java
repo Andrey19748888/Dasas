@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 public abstract class Task implements Frequency {
 
 
-    private static int counter = 1;
+    private static int counter = 5;
 
     private String name;
     private String description;
@@ -57,5 +57,13 @@ public abstract class Task implements Frequency {
 
     public boolean isDeleted() {
         return isDeleted;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

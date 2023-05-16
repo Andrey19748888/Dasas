@@ -7,17 +7,26 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+
+
+
+
+
     public static void main(String[] args) {
         Service service = new Service();
 
         try (Scanner scanner = new Scanner(System.in)) {
+
+            int id;
+            String newName;
+            String newDescription;
+
             label:
             while (true) {
                 printMenu();
                 System.out.print("Выберите пункт меню: ");
                 if (scanner.hasNextInt()) {
-                    int menu = scanner.nextInt();
-                    switch (menu) {
+                    switch (scanner.nextInt()) {
                         case 1:
                             inputTask(scanner, service);
                             System.out.println("Задача добавлена");
@@ -26,7 +35,6 @@ public class Main {
                         case 2:
                             // todo: обрабатываем пункт меню 2
                             System.out.println("Какую задачу вы хотите удалить? Введите id.");
-                            int id;
                             id = scanner.nextInt();
                             if (service.delete(id) != null) {
                                 System.out.println("Задача удалена. Список задач:");
@@ -52,6 +60,20 @@ public class Main {
                                 }
                             }
                             break;
+                        case 4:
+                            System.out.println("Введите id задачи для редактирования");
+                            id = scanner.nextInt();      // todo exception
+                            System.out.println("Какое будет новое название?");
+                            newName = scanner.next();
+                            service.getTaskById(id).setName(newName);
+                            System.out.println("Какое будет новое описание?");
+                            newDescription = scanner.nextLine();
+                            service.getTaskById(id).setDescription(newDescription);
+                            System.out.println("Задача отредактирована! Отредактированная задача:");
+                            System.out.println(service.getTaskById(id));
+                            break;
+                        case 5:
+                            service.printByDate();
                         case 0:
                             break label;
                         default:
@@ -60,10 +82,12 @@ public class Main {
                 } else {
                     scanner.next();
                     System.out.println("Выберите пункт меню из списка!");
+
                 }
             }
         }
     }
+
 
 
     private static void getTodayTasks(Service service, LocalDate date) {
@@ -204,6 +228,8 @@ public class Main {
         System.out.println("1. Добавить задачу");
         System.out.println("2. Удалить задачу");
         System.out.println("3. Получить задачу на указанный день");
+        System.out.println("4. Отредактировать задачу");
+        System.out.println("5. Список задач по датам");
         System.out.println("0. Выход");
     }
 }
